@@ -22,7 +22,43 @@ Analyse the influence of days since 2011, temperature, humidity and wind speed o
 
 
 ```{r}
+library(dplyr)
+library(reshape2)
+library(randomForest)
+library(pdp)
+library(ggplot2)
+library(gridExtra)
 
+day <- read.csv("day.csv")
+newdata <- dcast(day, instant ~ season, fun = length)[,-2]
+colnames(newdata) = c('instant','spring','summer','fall')
+day = merge(day,newdata)
+
+day[,'MISTY'] = ifelse(day$weathersit == 2, 1, 0)
+day[,'RAIN'] = ifelse(day$weathersit >= 3 & day$weathersit <= 4, 1, 0)
+
+day[,'den_temp'] = day$temp * 47 - 8
+day[, 'den_hum'] = day$hum * 100
+day[, 'den_windspeed'] = day$windspeed * 67
+
+#cada fila es un día nuevo y va por orden, número de dias desde el primero coincide con el instant no?
+day[,'days_since_2011'] = day$instant
+
+model = randomForest(cnt ~ workingday + holiday + spring + summer + fall + MISTY + RAIN + den_temp + den_hum + den_windspeed + days_since_2011, data = day)
+
+par.temp = partial(model, pred.var = c('den_temp'), chull = TRUE)
+plot.temp = autoplot(par.temp, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800))
+
+par.hum = partial(model, pred.var = c('den_hum'), chull = TRUE)
+plot.hum = autoplot(par.hum, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800))
+
+par.wind = partial(model, pred.var = c('den_windspeed'), chull = TRUE)
+plot.wind = autoplot(par.wind, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800))
+
+par.days = partial(model, pred.var = c('days_since_2011'), chull = TRUE)
+plot.days = autoplot(par.days, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800))
+
+grid.arrange(plot.temp, plot.hum, plot.wind, plot.days, nrow=1)
 ```
 
 ## 2.- Bidimensional Partial Dependency Plot
