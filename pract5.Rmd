@@ -78,16 +78,24 @@ Interpret the results.
 
 ```{r, echo=FALSE}
 set.seed(100)
-r_samp = sample_n(day, 350)
+
 
 model2 = randomForest(cnt ~ den_temp + den_hum, data = r_samp)
 
-par.temp2 = partial(model2, pred.var = c('den_temp'), chull = TRUE)
-
-par.hum2 = partial(model2, pred.var = c('den_hum'), chull = TRUE)
+par.model2 = partial(model2, pred.var = c('den_temp', 'den_hum'), chull = TRUE)
 
 ```
 
+```{r}
+r_samp = sample_n(day, 50)
+
+model2 = randomForest(cnt ~ workingday + holiday + spring + summer + fall + MISTY + RAIN + den_temp + den_hum + den_windspeed + days_since_2011, data = r_samp)
+
+par.model2 = partial(model2, pred.var = c('den_temp', 'den_hum'), chull = TRUE)
+
+ggplot(par.model2, aes(x = den_temp, y = den_hum, fill = yhat)) +
+  geom_tile()
+```
 
 ## 3.- PDP to explain the price of a house.
 
