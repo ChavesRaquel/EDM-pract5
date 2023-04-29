@@ -77,6 +77,14 @@ Interpret the results.
 
 
 ```{r, echo=FALSE}
+set.seed(100)
+r_samp = sample_n(day, 350)
+
+model2 = randomForest(cnt ~ den_temp + den_hum, data = r_samp)
+
+par.temp2 = partial(model2, pred.var = c('den_temp'), chull = TRUE)
+
+par.hum2 = partial(model2, pred.var = c('den_hum'), chull = TRUE)
 
 ```
 
