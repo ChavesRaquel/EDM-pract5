@@ -88,6 +88,13 @@ ggplot(par.model2, aes(x = den_temp, y = den_hum, fill = yhat)) +geom_tile()
 
 ```
 
+```{r}
+set.seed(100)
+
+par.twofeat = partial(model, pred.var = c('den_temp', 'den_hum'), chull = TRUE)
+
+ggplot(par.twofeat, aes(x = den_temp, y = den_hum, fill = yhat)) +geom_tile()
+```
 
 ## 3.- PDP to explain the price of a house.
 
