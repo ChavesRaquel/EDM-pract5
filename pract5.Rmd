@@ -78,7 +78,7 @@ Interpret the results.
 
 ```{r, echo=FALSE}
 set.seed(100)
-r_samp = sample_n(day, 50)
+r_samp = sample_n(day, 500)
 
 model2 = randomForest(cnt ~ workingday + holiday + spring + summer + fall + MISTY + RAIN + den_temp + den_hum + den_windspeed + days_since_2011, data = r_samp)
 
