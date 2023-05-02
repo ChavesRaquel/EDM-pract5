@@ -109,6 +109,11 @@ Use the partial dependence plot to visualize the relationships the model learned
 Analyse the influence of bedrooms, bathrooms, sqft_living and floors on the predicted price.
 
 ```{r}
+house <- read.csv("kc_house_data.csv")
+
+r_samp_house = sample_n(house, 500)
+
+modelhouse = randomForest(price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + yr_built, data = house)
 
 ```
 
