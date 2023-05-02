@@ -111,9 +111,24 @@ Analyse the influence of bedrooms, bathrooms, sqft_living and floors on the pred
 ```{r}
 house <- read.csv("kc_house_data.csv")
 
-r_samp_house = sample_n(house, 500)
+r_samp_house = sample_n(house, 500) # we take a sample
 
 modelhouse = randomForest(price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + yr_built, data = house)
 
+par.bed = partial(modelhouse, pred.var = c('bedrooms'), chull = TRUE)
+plot.bed = autoplot(par.bed, contour = TRUE) + geom_rug(alpha=0.7, sides='b')  + scale_y_continuous(limits = c(0,2250000))
+
+par.bath = partial(modelhouse, pred.var = c('bathrooms'), chull = TRUE)
+plot.bath = autoplot(par.bath, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000))
+
+par.living = partial(modelhouse, pred.var = c('sqft_living'), chull = TRUE)
+plot.living = autoplot(par.living, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000))
+
+
+par.floor = partial(modelhouse, pred.var = c('floors'), chull = TRUE)
+plot.floor = autoplot(par.floor, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000))
+
+
+grid.arrange(plot.bed, plot.bath, plot.living, plot.floor, nrow=1)
 ```
 
