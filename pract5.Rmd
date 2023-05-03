@@ -84,16 +84,16 @@ model2 = randomForest(cnt ~ workingday + holiday + spring + summer + fall + MIST
 
 par.model2 = partial(model2, pred.var = c('den_temp', 'den_hum'), chull = TRUE)
 
-ggplot(par.model2, aes(x = den_temp, y = den_hum, fill = yhat)) +geom_tile()
+ggplot(par.model2, aes(x = den_temp, y = den_hum, fill = yhat)) +geom_tile() + geom_rug(alpha=0.7, sides='lb')
 
 ```
 
 ```{r}
-set.seed(100)
+#set.seed(100)
 
-par.twofeat = partial(model, pred.var = c('den_temp', 'den_hum'), chull = TRUE)
+#par.twofeat = partial(model, pred.var = c('den_temp', 'den_hum'), chull = TRUE)
 
-ggplot(par.twofeat, aes(x = den_temp, y = den_hum, fill = yhat)) +geom_tile()
+#ggplot(par.twofeat, aes(x = den_temp, y = den_hum, fill = yhat)) +geom_tile()
 ```
 
 ## 3.- PDP to explain the price of a house.
@@ -123,7 +123,6 @@ plot.bath = autoplot(par.bath, contour = TRUE) + geom_rug(alpha=0.7, sides='b') 
 
 par.living = partial(modelhouse, pred.var = c('sqft_living'), chull = TRUE)
 plot.living = autoplot(par.living, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000))
-
 
 par.floor = partial(modelhouse, pred.var = c('floors'), chull = TRUE)
 plot.floor = autoplot(par.floor, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000))
