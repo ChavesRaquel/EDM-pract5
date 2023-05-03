@@ -47,18 +47,18 @@ day[,'days_since_2011'] = day$instant
 model = randomForest(cnt ~ workingday + holiday + spring + summer + fall + MISTY + RAIN + den_temp + den_hum + den_windspeed + days_since_2011, data = day)
 
 par.temp = partial(model, pred.var = c('den_temp'), chull = TRUE)
-plot.temp = autoplot(par.temp, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800))
+plot.temp = autoplot(par.temp, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800)) + theme(axis.text.x=element_text(angle=45)) 
 
 par.hum = partial(model, pred.var = c('den_hum'), chull = TRUE)
-plot.hum = autoplot(par.hum, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800))
+plot.hum = autoplot(par.hum, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800)) + theme(axis.text.x=element_text(angle=45)) 
 
 par.wind = partial(model, pred.var = c('den_windspeed'), chull = TRUE)
-plot.wind = autoplot(par.wind, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800))
+plot.wind = autoplot(par.wind, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800))+ theme(axis.text.x=element_text(angle=45)) 
 
 par.days = partial(model, pred.var = c('days_since_2011'), chull = TRUE)
-plot.days = autoplot(par.days, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800))
+plot.days = autoplot(par.days, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,5800))+ theme(axis.text.x=element_text(angle=45)) 
 
-grid.arrange(plot.temp, plot.hum, plot.wind, plot.days, nrow=1)
+grid.arrange(plot.temp, plot.hum, plot.wind, plot.days, nrow=2)
 ```
 
 ## 2.- Bidimensional Partial Dependency Plot
@@ -116,18 +116,18 @@ r_samp_house = sample_n(house, 500) # we take a sample
 modelhouse = randomForest(price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + yr_built, data = house)
 
 par.bed = partial(modelhouse, pred.var = c('bedrooms'), chull = TRUE)
-plot.bed = autoplot(par.bed, contour = TRUE) + geom_rug(alpha=0.7, sides='b')  + scale_y_continuous(limits = c(0,2250000))
+plot.bed = autoplot(par.bed, contour = TRUE) + geom_rug(alpha=0.7, sides='b')  + scale_y_continuous(limits = c(0,2250000)) + theme(axis.text.x=element_text(angle=45)) 
 
 par.bath = partial(modelhouse, pred.var = c('bathrooms'), chull = TRUE)
-plot.bath = autoplot(par.bath, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000))
+plot.bath = autoplot(par.bath, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000)) + theme(axis.text.x=element_text(angle=45)) 
 
 par.living = partial(modelhouse, pred.var = c('sqft_living'), chull = TRUE)
-plot.living = autoplot(par.living, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000))
+plot.living = autoplot(par.living, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000)) + theme(axis.text.x=element_text(angle=45, vjust=0.75)) 
 
 par.floor = partial(modelhouse, pred.var = c('floors'), chull = TRUE)
-plot.floor = autoplot(par.floor, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000))
+plot.floor = autoplot(par.floor, contour = TRUE) + geom_rug(alpha=0.7, sides='b') + scale_y_continuous(limits = c(0,2250000)) + theme(axis.text.x=element_text(angle=45)) 
 
 
-grid.arrange(plot.bed, plot.bath, plot.living, plot.floor, nrow=1)
+grid.arrange(plot.bed, plot.bath, plot.living, plot.floor, nrow=2)
 ```
 
