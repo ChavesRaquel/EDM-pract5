@@ -21,7 +21,7 @@ Analyse the influence of days since 2011, temperature, humidity and wind speed o
 
 
 
-```{r}
+```{r, echo=FALSE}
 library(dplyr)
 library(reshape2)
 library(randomForest)
@@ -108,7 +108,7 @@ Use the partial dependence plot to visualize the relationships the model learned
 *QUESTION:*
 Analyse the influence of bedrooms, bathrooms, sqft_living and floors on the predicted price.
 
-```{r}
+```{r, echo = FALSE}
 house <- read.csv("kc_house_data.csv")
 
 r_samp_house = sample_n(house, 500) # we take a sample
